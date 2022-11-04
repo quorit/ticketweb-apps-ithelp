@@ -6,7 +6,7 @@ module.exports = {
     'vuetify'
   ],
   publicPath: process.env.VUE_APP_PUBLIC_PATH,
-  outputDir: path.resolve(process.env.VUE_APP_VENV_ROOT,"srv/ticketweb/applications/reporting/frontend"),
+  outputDir: path.resolve(process.env.VUE_APP_VENV_ROOT,"srv/ticketweb/applications/ithelp/frontend"),
   devServer: (process.env.NODE_ENV=='development')?{
     port: process.env.VUE_APP_PORT,
     proxy: {

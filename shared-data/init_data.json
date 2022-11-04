@@ -315,7 +315,7 @@
         "status": "Status"
     },
     "standard_fields": {
-        "admissions": [
+        "onboarding": [
             "id",
             "name_last",
             "name_first",
@@ -340,7 +340,7 @@
         "dashboard": "Undergraduate Admissions Dashboard"
     },
     "request_types": {
-        "admissions": "Admissions data",
+        "onboarding": "Onboarding data",
         "student": "Student data",
         "rptsupport": "Data support"
     }

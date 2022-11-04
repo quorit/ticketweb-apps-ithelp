@@ -22,16 +22,16 @@ ticketweb_venv_root="$1"
 mode="$2"
 
 
-cat $ticketweb_venv_root/etc/ticketweb/applications/reporting/frontend-config.json
+cat $ticketweb_venv_root/etc/ticketweb/applications/ithelp/frontend-config.json
 
 
 
-VUE_APP_CONFIG_DATA=$(cat $ticketweb_venv_root/etc/ticketweb/applications/reporting/frontend-config.json) 
+VUE_APP_CONFIG_DATA=$(cat $ticketweb_venv_root/etc/ticketweb/applications/ithelp/frontend-config.json) 
 export VUE_APP_CONFIG_DATA
 
 
 
-cd "$ticketweb_venv_root"/var/lib/ticketweb/applications/reporting/frontend
+cd "$ticketweb_venv_root"/var/lib/ticketweb/applications/ithelp/frontend
 
 VUE_APP_VENV_ROOT="$ticketweb_venv_root"
 

@@ -162,7 +162,7 @@ export default {
          try {
             
 
-            response_json = await authsystem_network.get_app_token(authsystem_path,"reporting")
+            response_json = await authsystem_network.get_app_token(authsystem_path,"ithelp")
                             .then(this.validate_form)
                             .then(app_token => rt_network.submit_data(this.submissionData.json,
                                                            this.submissionData.attachments,
@@ -188,7 +188,7 @@ export default {
       },
       reset_all: async function(){
         try {
-           await authsystem_network.get_app_token(authsystem_path,"reporting"); //don't care what the app_token is
+           await authsystem_network.get_app_token(authsystem_path,"ithelp"); //don't care what the app_token is
         } catch (e){
            if (e instanceof authsystem_network.SessionAuthenticationError){
                //this should cover...missing session cookie, expired session

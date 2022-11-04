@@ -11,7 +11,7 @@ else:
 
 
 def _get_config_data_all():
-    ldap_file = os.path.join(_etc_path,"ticketweb/applications/reporting/app-server-config.json")
+    ldap_file = os.path.join(_etc_path,"ticketweb/applications/ithelp/app-server-config.json")
 
     f = open(ldap_file,"r")
     ldap_data = json.load(f)

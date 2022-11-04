@@ -30,11 +30,27 @@
             OUR/UAR Service Ticket Request Forms {{ mode_text }}
       </span>
       <v-spacer/>
-      <v-btn v-if="$route.name != 'login' && $route.name != 'error_page'"
-                  class="ma-2"
-                  @click ="logout()">
-                  LOGOUT
+        <v-menu offset-y v-if="$route.name != 'login' && $route.name != 'error_page' && $store.state.user_data">
+           <template v-slot:activator="{ on, attrs }">
+               <v-btn
+                    color="primary"
+                    dark
+                    v-bind="attrs"
+                    v-on="on"
+               >
+                    logged in as {{ $store.state.user_data.net_id}}
                </v-btn>
+            </template>
+            <v-btn
+                  
+                    class="ma-2"
+                    @click ="logout()"
+            >
+                logout
+            </v-btn>
+
+
+        </v-menu>
     </v-app-bar>
 
     <v-main> 
@@ -73,7 +89,7 @@ export default {
   methods: {
     logout: async function(){
       try {
-         await authsystem_network.delete_session(authsystem_path,"reporting");      
+         await authsystem_network.delete_session(authsystem_path,"ithelp");      
       } catch (e) {
           this.$router.push( {                    
                     name: "error_page",
@@ -86,6 +102,13 @@ export default {
     }
 
   },
+  //beforeMount: async function(){
+  //  if (this.$route.name != 'login' && this.$route.name != 'error_page'){
+  //        await authsystem_network.get_app_token(authsystem_path,"ithelp").then(app_token => this.$store.dispatch('set_user_data',app_token));
+  //  }
+
+  //},
+
   mounted: async function(){
     try { 
       await this.$store.dispatch('set_init_data');
@@ -95,6 +118,10 @@ export default {
           params: get_error_params(e)
       });            
     }
+   
+
+
+
   }
 };
 </script>

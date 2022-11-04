@@ -121,7 +121,7 @@ export default {
          this.processing_request=true;
          this.login_fail=false;
          try {
-            await authsystem_network.login_session(this.net_id,this.password,authsystem_path,"reporting");
+            await authsystem_network.login_session(this.net_id,this.password,authsystem_path,"ithelp");
          } catch (e) {
             this.login_error = e;
             this.processing_request=false;
@@ -131,18 +131,12 @@ export default {
          this.processing_request=false;
          var route_name;
          const form_type = this.$route.params.type;
-         if (form_type == 'rptsupport'){
-            route_name = 'reporting_support_form';
-         } else{
-            route_name = 'reporting_request_forms'
-         }
+         route_name = 'onboarding_form';
          var route_obj = {name: route_name};
-         if (form_type != 'rptsupport'){
-            route_obj.params = 
+         route_obj.params = 
                { 
                   type: form_type
                };
-         }
          await this.$router.push(route_obj);
       }    
       

@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import TicketInfo from '../views/TicketInfo.vue'
-import ReportingForm from '../views/Reporting.vue'
-import RptSupport from '../views/RptSupport.vue'
+import OnboardingForm from '../views/Onboarding.vue'
 import ErrorPage from '../views/ErrorPage.vue'
 import LoginForm from '../views/Login.vue'
 
@@ -15,30 +13,15 @@ Vue.use(VueRouter)
 
 
 const routes = [
-	{
-        path: '/ticket_info/:id',
-        component: TicketInfo,
-        name: 'ticket_info',
-        props: (route) => { 
-            return {
-                id: route.params.id
-            }; 
-        }    
-	},
     {
-        path: '/forms/:type(admissions|student)',
-        component: ReportingForm,
-        name: "reporting_request_forms"
+        path: '/forms/:type(onboarding)',
+        component: OnboardingForm,
+        name: "onboarding_form"
     },
     {
-        path: '/login/:type(admissions|student|rptsupport)',
+        path: '/login/:type(onboarding)',
         component: LoginForm,
         name: "login"
-    },
-    {
-        path: '/forms/:type(rptsupport)',
-        component: RptSupport,
-        name: "reporting_support_form"
     },
     {
         path: '/error/:error_type/:status_code?',
@@ -77,12 +60,8 @@ router.beforeEach(async (to,from,next) => {
     function next_login(){
         //here 'to' is assumed to be either reporting_support_form or
         //reporting_request forms
-        var type;
-        if (to.name == 'reporting_support_form'){
-            type = 'rptsupport';
-        }else{
-            type = to.params.type
-        }
+        const type = to.params.type
+
         next({
             name: "login",
             params: {
@@ -93,11 +72,11 @@ router.beforeEach(async (to,from,next) => {
 
     
 
-    if((to.name == 'reporting_request_forms' || to.name == 'reporting_support_form')){
+    if((to.name == 'onboarding_form')){
 
 
         try{
-            await authsystem_network.get_app_token(authsystem_path,"reporting").then(app_token => store.dispatch('set_user_data',app_token));
+            await authsystem_network.get_app_token(authsystem_path,"ithelp").then(app_token => store.dispatch('set_user_data',app_token));
             //Note that I am re-fetching the user data every time we go to a new page (other than login or error).
             //This is because in another window the user could log out and log in as someone else.
             //and if this app were any more involved, there would be links going from one route to another

@@ -1,11 +1,21 @@
 <template>
-   <FormShell
-    :clear-func="clear_func"
-    :heading="$route.params.type.charAt(0).toUpperCase() + $route.params.type.slice(1) + ' data request'"
-    :submission-data="submission_data"
-    submit_button_label="SUBMIT YOUR REQUEST"
-    :init-data="init_data"
-    :form-type="route_type">
+
+
+       <v-stepper
+          v-model="step_num"
+          vertical
+       >
+
+       <v-stepper-step
+       :complete="step_num > 1 && employee_name"
+       step="1"
+      >
+         Employee info
+      </v-stepper-step>
+      <v-stepper-content step="1">
+
+      
+
          <v-row>
             
 
@@ -13,18 +23,16 @@
             <v-col cols="6">
                <v-text-field
                   maxlength="50"
-                  v-model="requestor_name"
-                  label="Requestor name"
-                  disabled
+                  v-model="employee_name"
+                  label="Employee full name"
                   />
             </v-col>
             <v-col cols="6">
                <v-text-field
                   maxlength="50"
-                  v-model="requestor_dept"
+                  v-model="employee_net_id"
                   v-bind:counter="50"
-                  v-bind:rules="requestorDeptRules"
-                  label="Requestor dept"/>
+                  label="Employee net id (optional)"/>
             </v-col>
          </v-row>
          <v-row>
@@ -264,8 +272,8 @@
              </v-col>
 
          </v-row>
-
-  </FormShell>
+         </v-stepper-content>
+      </v-stepper>
 
 
 </template>
@@ -281,7 +289,6 @@ import SelectList from '../components/SelectList.vue'
 import DateMenu from '../components/DateMenu.vue'
 // import SelectFields from '../components/SelectFields.vue'
 import TermSelect from '../components/TermSelect.vue'
-import FormShell from '../components/FormShell.vue'
 import RptFileInput from '../components/FileInput.vue'
 
 import {get_strm_bounds, get_current_term} from '../js_extra/utils.js';
@@ -289,7 +296,7 @@ import {get_strm_bounds, get_current_term} from '../js_extra/utils.js';
 
 
 export default {
-   name: 'ReportingForm',
+   name: 'OnboardingForm',
    components: { 
       MultiSelect,
       MultiSelectStudent,
@@ -298,7 +305,6 @@ export default {
       DateMenu,
       // SelectFields,
       TermSelect,
-      FormShell,
       RptFileInput
    },
    data: function() {
@@ -334,7 +340,8 @@ export default {
             v => !!v || 'E-mail is required',
             v => /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v) || 'E-mail must be valid'
          ],
-         requestorNameRules: [
+         employeeNameRules: [
+            //
          ],
          requested_before_rules: [
             v => !!v || "Information about the previous request is required."
@@ -398,7 +405,8 @@ export default {
          ],
          field_list: field_list,
          route_type: route_type,
-         files: []
+         files: [],
+         step_num: 1
       };
    },
    methods: {
