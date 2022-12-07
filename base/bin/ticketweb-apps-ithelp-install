@@ -118,6 +118,7 @@ if [[ "$devel_mode" -eq 0 ]]; then
   npm install $tmpdir/ticketweb-authsystem/frontend_module
   npm install $tmpdir/ticketweb-rt-interface/frontend_module
 
+
   cp $tmpdir/ticketweb-apps-ithelp/shared-data/* "$shared_data_target_dir"
 
 fi
