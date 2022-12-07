@@ -28,9 +28,9 @@
         "stud_financials": "Student Financials",
         "director": "Director",
         "stud_acc_sp": "Student Account Specialist",
+        "stud_acc_rep": "Student Account Representative",
         "stud_acc_admin": "Student Account Administrator",
         "fin_proc_manage": "Finance and Process Management Analyst",
-        "stud_acc_rep": "Student Account Representative",
         "stud_recs": "Student Records",
         "manager": "Manager",
         "tm_ld_reg_fees": "Team Lead Regstration and Fees",
@@ -42,20 +42,28 @@
         "trans_assist": "Transcript Assistant",
         "tech_support_pid": "Tech Support Assistant (Photo ID)",
         "exams_teach_assess": "Exams and Teaching Assessment",
+        "exams_off": "Exams Office",
         "exam_admin": "Exam Administrator",
         "exam_assist": "Exam Assistant",
+        "teach_assess": "Teaching Assessment",
         "crse_eval_admin": "Course Evaluation Administrator",
         "student_info_analysis": "Student Information and Analysis",
-        "sen_sys_analysis": "Senior Systems Analyst",
+        "stud_data": "Student_data",
+        "sen_sys_analyst": "Senior Systems Analyst",
         "sis_analyst": "Student Information Analyst",
+        "administration": "Administration",
         "deg_aud_coord": "Degree Audit Coordinator",
         "campus_support": "Campus Solutions Support Analyst",
         "tt": "Timetabling",
         "lead_tt_analyst": "Lead Timetable Analyst",
         "tt_admin": "Timetableing Administrator",
-        "its_spec_proj": "IT Support and Special Projects",
-        "it_support": "IS Support",
-        "jr_analyst": "Junion Analyst",
+        "proj_analysis": "Projects and Analysis",
+        "projects": "Projects",
+        "analysis": "Analysis",
+        "it_support": "IT Support",
+        "jr_analyst": "Junior Analyst",
+        "tech_spec": "Technical Support Specialist",
+        "tech_web": "Technical/Web Support",
         "hybrid": "Hybrid",
         "in_office": "100% In-Office",
         "remote": "100% Remote",
@@ -104,7 +112,61 @@
                 "stud_resource_assist": ["loan_progs"],
                 "stud_client": []
             }
-        }   
+        },
+        "rec_ser": {
+            "aur": [],
+            "stud_financials": {
+                "director": [],
+                "stud_acc_sp": [],
+                "stud_acc_admin": [],
+                "fin_proc_manage": [],
+                "stud_acc_rep": []
+            },
+            "stud_recs": {
+                "manager": [],
+                "tm_ld_reg_fees": [],
+                "reg_fees_admin": []
+            },
+            "tt": {
+                "manager": [],
+                "lead_tt_analyst": [],
+                "tt_admin": []
+            }
+        },
+        "exams_teach_assess":{
+            "manager": [],
+            "exams_off": {
+                "exam_admin": [],
+                "exam_assist": []
+            },
+            "teach_assess": {
+                "crse_eval_admin": []
+            }
+            
+        },
+        "student_info_analysis": {
+            "director": [],
+            "stud_data": {
+                "sen_sys_analyst": [],
+                "sis_analyst": []
+            },
+            "administration": {
+                "deg_aud_coord": [],
+                "campus_support": []
+            }
+
+        },
+        "proj_analysis": {
+            "manager": [],
+            "projects": {
+                "ba": [],
+                "jr_analyst": []
+            },
+            "it_support": {
+                "tech_spec": [],
+                "tech_web": []
+            }
+        }
     },
     "work_models":[
         "hybrid",
