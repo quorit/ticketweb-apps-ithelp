@@ -38,8 +38,6 @@
                </v-btn>
             </v-col>
          </v-row>
-        {{ submission_data }}
-      
         
 
       <v-row>
