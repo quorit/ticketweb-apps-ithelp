@@ -441,7 +441,7 @@
          <dd>
             {{ xlat[submission_data.json.work_model_selection] }}
          </dd>
-         <dt v-if="'room_selection' in submission_data.json"><b>Employee location</b></dt>
+         <dt v-if="'room_selection' in submission_data.json"><b>Employee in-office location</b></dt>
          <dd v-if="'room_selection' in submission_data.json">
             {{ xlat[submission_data.json.room_selection] }}
          </dd>
@@ -549,15 +549,6 @@
 
 
       </v-stepper>
-
- 
-
-
-
-
-
-
-     {{ submission_data.json }}
 
 
    </FormShell>
