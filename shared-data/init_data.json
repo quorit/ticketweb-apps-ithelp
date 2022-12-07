@@ -48,7 +48,7 @@
         "teach_assess": "Teaching Assessment",
         "crse_eval_admin": "Course Evaluation Administrator",
         "student_info_analysis": "Student Information and Analysis",
-        "stud_data": "Student_data",
+        "stud_data": "Student Data",
         "sen_sys_analyst": "Senior Systems Analyst",
         "sis_analyst": "Student Information Analyst",
         "administration": "Administration",
@@ -130,42 +130,46 @@
                 "manager": [],
                 "lead_tt_analyst": [],
                 "tt_admin": []
+            },
+            "exams_teach_assess":{
+                "manager": [],
+                "exams_off": {
+                    "exam_admin": [],
+                    "exam_assist": []
+                },
+                "teach_assess": {
+                    "crse_eval_admin": []
+                }
+                
             }
         },
-        "exams_teach_assess":{
-            "manager": [],
-            "exams_off": {
-                "exam_admin": [],
-                "exam_assist": []
+        "sis": {
+            "aur": [],
+            "student_info_analysis": {
+                "director": [],
+                "stud_data": {
+                    "sen_sys_analyst": [],
+                    "sis_analyst": []
+                },
+                "administration": {
+                    "deg_aud_coord": [],
+                    "campus_support": []
+                }
+    
             },
-            "teach_assess": {
-                "crse_eval_admin": []
-            }
-            
-        },
-        "student_info_analysis": {
-            "director": [],
-            "stud_data": {
-                "sen_sys_analyst": [],
-                "sis_analyst": []
-            },
-            "administration": {
-                "deg_aud_coord": [],
-                "campus_support": []
-            }
-
-        },
-        "proj_analysis": {
-            "manager": [],
-            "projects": {
-                "ba": [],
-                "jr_analyst": []
-            },
-            "it_support": {
-                "tech_spec": [],
-                "tech_web": []
+            "proj_analysis": {
+                "manager": [],
+                "projects": {
+                    "ba": [],
+                    "jr_analyst": []
+                },
+                "it_support": {
+                    "tech_spec": [],
+                    "tech_web": []
+                }
             }
         }
+        
     },
     "work_models":[
         "hybrid",
