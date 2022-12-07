@@ -1,348 +1,147 @@
 
+
 {
-    "faculties": {
-        "FAS": {
-            "QA": "Arts (QA)",
-            "QB": "ConEd/Arts (QB)",
-            "QD": "Computing (QD)",
-            "QF": "ConEd/Science (QF)",
-            "QK": "Kinesiology (QK)",
-            "QL": "Life Sciences (QL)",
-            "QM": "Music (QM)",
-            "QMM": "ConEd/Music (QMM)",
-            "QS": "Science (QS)",
-            "QT": "Fine Art (QT)",
-            "QTT": "ConEd/Fine Art (QTT)"
-
-        },
-        "FHS": {
-            "QH": "Health Sciences (QH)",
-            "QN": "Nursing (QN)"
-        },
-        "BISC": {
-            "QIH": "BISC Health Sci (QIH)",
-            "QIA": "BISC Arts (QIA)",
-            "QIS": "BISC Science (QIS)",
-            "QIB": "BISC ConEd/Arts (QIB)",
-            "QIF": "BISC ConEd/Science (QIF)"
-        },
-        "FEAS":{
-            "QE": "Engineering (QE)",
-            "QEC": "Engineering, Elec & Comp (QEC)",
-            "QEM": "Mechatronic and Robotics (QEM)"
-
-        },
-        "QBRD":{
-            "QXA": "Arts (QXA)",
-            "QXD": "Computing (QXD)",
-            "QXE": "Engineering (QXE)",
-            "QXS": "Science (QXS)"
-        },
-        "BMT": {
-            "QMT": "Music (QMT)"
-        },
-        "SSB": {
-            "QC": "Commerce (QC)"
-        }
+    "xlat": {
+        "registrar": "University Registar",
+        "reg_assist": "Assistant to the University Registrar",
+        "rec_ser": "Records and Services",
+        "awd": "Student Awards",
+        "sis": "Student Information Systems",
+        "aur": "Associate University Registrar",
+        "bus_op_analysis": "Business Operations and Analysis",
+        "donor_relations": "Donor Relations",
+        "sen_awd_officer": "Senior Awards Officer",
+        "oop_loans_renewable": "Out of Province Loan Programs and Renewable Rewards",
+        "fin_aid": "Financial Aid",
+        "ba": "Business Analyst",
+        "awd_officer":  "Awards Officer",
+        "stud_resource_assist": "Student Resource Assistant",
+        "in_course": "In-Course",
+        "admission_awards": "Admission Awards",
+        "oop_loans": "Out of Province Loan Programs",
+        "us_loans": "US Loans",
+        "osap": "OSAP Programs",
+        "osap_burs": "OSAP Bursary Programs",
+        "osap_loan": "OSAP and Loan Programs",
+        "loan_progs": "Loan Programs",
+        "stud_client": "Student Client Services Representative",
+        "stud_financials": "Student Financials",
+        "director": "Director",
+        "stud_acc_sp": "Student Account Specialist",
+        "stud_acc_admin": "Student Account Administrator",
+        "fin_proc_manage": "Finance and Process Management Analyst",
+        "stud_acc_rep": "Student Account Representative",
+        "stud_recs": "Student Records",
+        "manager": "Manager",
+        "tm_ld_reg_fees": "Team Lead Regstration and Fees",
+        "reg_fees_admin": "Registration and Fees Administrator",
+        "stud_srv_conv": "Student Services and Convocation",
+        "sen_clerk_srv": "Senior Clerk Services",
+        "conv_comm_admin": "Convocation and Communications Administrator",
+        "srv_info_assist": "Service and Information Assistant",
+        "trans_assist": "Transcript Assistant",
+        "tech_support_pid": "Tech Support Assistant (Photo ID)",
+        "exams_teach_assess": "Exams and Teaching Assessment",
+        "exam_admin": "Exam Administrator",
+        "exam_assist": "Exam Assistant",
+        "crse_eval_admin": "Course Evaluation Administrator",
+        "student_info_analysis": "Student Information and Analysis",
+        "sen_sys_analysis": "Senior Systems Analyst",
+        "sis_analyst": "Student Information Analyst",
+        "deg_aud_coord": "Degree Audit Coordinator",
+        "campus_support": "Campus Solutions Support Analyst",
+        "tt": "Timetabling",
+        "lead_tt_analyst": "Lead Timetable Analyst",
+        "tt_admin": "Timetableing Administrator",
+        "its_spec_proj": "IT Support and Special Projects",
+        "it_support": "IS Support",
+        "jr_analyst": "Junion Analyst",
+        "hybrid": "Hybrid",
+        "in_office": "100% In-Office",
+        "remote": "100% Remote",
+        "gor100": "RM 100",
+        "gor110": "RM 110",
+        "gor125": "RM 125",
+        "gor225": "RM 225",
+        "gor200": "RM 200", 
+        "has_phone_not_required": "New employee already has an existing personal phone extension but no longer requires it in their new role.",
+        "has_phone_keep": "New employee already has an existing personal phone extension and will continue to require it in their new role.",
+        "no_phone_not_required": "New employee does not have an existing personal phone extension and will not require one.",
+        "no_phone_new": "New employee does not have an existing personal phone extension but will require one.",
+        "hw_choice1": "Desktop PC in office with 2 monitors and desktop PC at home with 1 monitor",
+        "hw_choice2": "Laptop with docking station, two monitors in office, and one monitor at home",
+        "hw_choice3": "Desktop PC with 2 monitors",
+        "hw_choice4": "Laptop with docking station and 2 monitors",
+        "transcript_prnt": "Transcript printer",
+        "frontdsk_prnt": "Frontdesk printer",
+        "eventuse_ml": "eventuser-l",
+        "timetabl_ml": "timetabl-l",
+        "psautodeprorpt_ml": "PSAUtoDeproRpt-DL"
     },
-    "faculties_student": {
-        "FAS": {
-            "longhand": "Faculty of Arts and Science",
-            "progs": {
-                "arts": {
-                    "longhand": "Arts",
-                    "extension": false
-                },
-                "computing": {
-                    "longhand": "Computing",
-                    "extension": false
-                },
-                "fine_art":{
-                    "longhand": "Fine Art",
-                    "extension": false
-                },
-                "music": {
-                    "longhand": "Music",
-                    "extension": false
-                },
-                "science": {
-                    "longhand": "Science",
-                    "extension": false
-                },
-                "certs":{
-                    "longhand": "Certificates",
-                    "extension": {
-                        "heading": "Certificate Selection",
-                        "extension_type": "some_all"
-                    }
-                }
-            }
+    "org_tree": {
+        "registrar": {
+            "registrar": [],
+            "reg_assist": []
         },
-        "EDU": {
-            "longhand": "Faculty of Education",
-            "progs": {
-                "consecututive_ed": {
-                    "longhand": "Consecutive Education",
-                    "extension": false
-                },
-                "continuing_ed": {
-                    "longhand": "Continuing Education",
-                    "extension": false
-                },
-                "esl":
-                {
-                    "longhand": "English as a Second Language",
-                    "extension": false
-                }
+        "awd": {
+            "aur": [],
+            "bus_op_analysis": {
+                "manager": [] 
+            },
+            "donor_relations": {
+                "sen_awd_officer": []
+            },
+            "oop_loans_renewable": {
+                "awd_officer": []
+            },
+            "fin_aid": {
+                "ba": [],
+                "awd_officer": ["in_course","admission_awards","oop_loans","us_loans","osap"],
+                "stud_resource_assist": ["admission_awards", "in_course"]
+            },
+            "osap_loan":{
+                "awd_officer": ["osap", "osap_burs" ],
+                "stud_resource_assist": ["loan_progs"],
+                "stud_client": []
             }
-        },
-        "FHS": {
-            "longhand": "Faculty of Health Sciences",
-            "progs": {
-                "degree": {
-                    "longhand": "Health Sciences Degree",
-                    "extension": false
-                }, 
-                "non_degree": {
-                    "longhand": "Health Sciences Non-Degree",
-                    "extension": false
-                }, 
-                "medicine": {
-                    "longhand": "Medicine",
-                    "extension": false
-                },
-                "nursing": {
-                    "longhand": "Nursing",
-                    "extension": false
-                }
-
-            }
-        },
-        "LAW":{
-            "longhand": "Faculty of Law",
-            "progs": {
-                "jd": {
-                    "longhand": "Juris Doctor",
-                    "extension": false
-                },
-                "ml": {
-                    "longhand": "Master of Laws",
-                    "extension": false
-                },
-                "cert":{
-                    "longhand": "Certificate in Law",
-                    "extension": false
-                }
-            }
-        },
-        "FEAS":{
-            "longhand": "Faculty of Engineering & Applied Science",
-            "progs": {
-                "degree": {
-                    "longhand": "Engineering Degree",
-                    "extension": false
-                },
-                "non_degree": {
-                    "longhand": "Engineering Non-Degree",
-                    "extension": false
-                },
-                "certs": {
-                    "longhand": "Certificates",
-                    "extension": {
-                        "heading": "Certificate Selection",
-                        "extension_type": "some_all"
-                    }
-                }
-            }
-        },
-        "SSB": {
-            "longhand": "Smith School of Business",
-            "progs": {
-                "commerce": {
-                    "longhand": "Commerce",
-                    "extension": false
-                },
-                "mba": {
-                    "longhand": "Master of Business Administration",
-                    "extension": false
-                },
-                "cert": {
-                    "longhand": "Certificate in Business",
-                    "extension": false
-                },
-                "other":{
-                    "longhand": "Other Programs",
-                    "extension": {
-                        "heading": "Other Program Selection",
-                        "extension_type": "some"
-                    }
-                }
-            }
-        },
-        "SGS": {
-            "longhand": "School of Graduate Studies",
-            "progs": {
-                "phd": {
-                    "longhand": "PHD",
-                    "extension": {
-                        "heading": "PHD Concentrations",
-                        "extension_type": "some_all"
-                    }
-                },
-                "masters": {
-                    "longhand": "Masters",
-                    "extension": {
-                        "heading": "Masters Concentrations",
-                        "extension_type": "some_all"
-                    }
-                },
-                "non_degree": {
-                    "longhand": "Non-Degree",
-                    "extension": false
-                }
-            }
-        }
+        }   
     },
-    "data_lists": {
-        "app_statuses": {
-            "heading": "Application statuses",
-            "items": {
-                "application": "Application",
-                "offered": "Offered",
-                "accepted": "Accepted"
-            }
-        },
-        "acad_loads_adm": {
-            "heading": "Academic loads",
-            "items": {
-                "full_time": "Full-time",
-                "part_time": "Part-time"
-            }
-        },
-        "acad_loads_student": {
-            "heading": "Academic load",
-            "items": {
-                "full_time": "Full-time",
-                "part_time": "Part-time",
-                "no_load": "No Load"
-            }
-        },
-        "careers_adm": {
-            "heading": "Careers",
-            "items": {
-                "ugrd": "Undergraduate",
-                "dist": "Undergraduate Online",
-                "grad_law_x": "Graduate (Law Exchange only)"
-            }
-        },
-        "careers_student": {
-            "heading": "Career",
-            "items": {
-                "ugrd": "Undergraduate (UGRD)",
-                "grad": "Graduate (GRAD)",
-                "dist": "Undergraduate Online (DIST)",
-                "nonc": "Non Credit (NONC)"
-            }
-        },
-        "term_statuses": {
-            "heading": "Student term status at selected terms",
-            "items": {
-                "active_nwd": "Active and not term withdrawn",
-                "active": "Active (including term withdrawn)"
-            }
-        },
-        "prog_statuses": {
-            "heading": "Program status",
-            "items": {
-                "active": "Active",
-                "completed": "Completed",
-                "withdrawn": "Withdrawn"
-            }
-        },
-        "admit_types": {
-            "heading": "Admit types",
-            "items": {
-                "first_year": "First year",
-                "upper_year": "Upper year"
-            }
-        },
-        "student_statuses": {
-            "heading": "Student status",
-            "items": {
-                "active": "Active",
-                "completed": "Completed",
-                "cancelled": "Cancelled",
-                "discontinued": "Discontinued",
-                "l_o_a": "Leave of Absence"
-            }
-        },
-        "campuses": {
-            "heading": "Campus",
-            "items": {
-                "bisc": "U.K. (BISC)",
-                "main": "Main (MAIN)"
-            }
-        }
-
-    },
-    "list_menus": {
-        "admissions": [
-            "careers_adm",
-            "admit_types",
-            "acad_loads_adm",
-            "app_statuses"
+    "work_models":[
+        "hybrid",
+        "in_office",
+        "remote"
+    ],
+    "rooms": [
+        "gor100",
+        "gor110",
+        "gor125",
+        "gor225",
+        "gor200"
+    ],
+    "phone_extensions":[
+        "has_phone_not_required",
+        "has_phone_keep",
+        "no_phone_not_required",
+        "no_phone_new"
+    ],
+    "hw_choices":{
+        "hybrid": [
+            "hw_choice1",
+            "hw_choice2"
         ],
-        "student":[
-            "careers_student",
-            "term_statuses",
-            "acad_loads_student",
-            "student_statuses",
-            "campuses"
+        "other":[
+            "hw_choice3",
+            "hw_choice4"
         ]
+
     },
-    "field_defs":{
-        "id": "ID",
-        "name_last": "Last Name",
-        "name_first": "Preferred First Name (when available)",
-        "applicant_email": "Applicant Email",
-        "campus_email": "Campus Email",
-        "program": "Program",
-        "plan": "Plan",
-        "campus": "Campus",
-        "level": "Level",
-        "load": "Load",
-        "term": "Term",
-        "status": "Status"
-    },
-    "standard_fields": {
-        "onboarding": [
-            "id",
-            "name_last",
-            "name_first",
-            "applicant_email"
-        ],
-        "student": [
-            "id",
-            "name_last",
-            "name_first",
-            "campus_email",
-            "program",
-            "plan",
-            "campus",
-            "level",
-            "load",
-            "term",
-            "status"
-        ]
-    },
-    "data_support_choices": {
-        "class_list": "Student Class List via Power BI",
-        "dashboard": "Undergraduate Admissions Dashboard"
-    },
-    "request_types": {
-        "onboarding": "Onboarding data",
-        "student": "Student data",
-        "rptsupport": "Data support"
-    }
-    
+    "supp_prnts":[
+        "transcript_prnt",
+        "frontdsk_prnt"
+    ],
+    "supp_mls":[
+        "eventuse_ml",
+        "timetabl_ml",
+        "psautodeprorpt_ml"
+    ]
 }

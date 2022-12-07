@@ -220,8 +220,12 @@ def create_response_body_user_data(display_name,mail):
 
 
 
-def _build_dtdd(title, data):
-    return "<dt>" + title + ":</dt><dd>" + html.escape(data) + "</dd>"
+def _build_dtdd(title, data,escape_data=True):
+    if escape_data:
+        out_data=html.escape(data)
+    else:
+        out_data=data
+    return "<dt>" + title + ":</dt><dd>" + out_data + "</dd>"
 
 if sys.base_prefix != sys.prefix:
     _data_path = sys.prefix + "/usr/local/share/ticketweb/applications/ithelp/shared-data"
@@ -297,152 +301,129 @@ def _build_requested_fields(requested_fields):
 
 
 
-class SubmitTicketRptSupport(SubmitTicket):
+xlat = _shared_data["xlat"]
+
+class SubmitTicketOnboarding(SubmitTicket):
     def __init__(self):
         def get_subject(req_content):
-            return "Data support request"
+            return "Onboarding request"
 
         def get_ticket_content(real_name,req_content):
-            source_choice = req_content["source_choice"]
-            if source_choice["rpt_source_type"] == "standard":
-                report_txt = _shared_data["data_support_choices"][source_choice["source_key"]]
-            else:
-                report_txt = source_choice["description"]
-            result = "<dl>" \
-                      + _build_dtdd("Request Type","Data support") \
-                      + _build_dtdd("Requestor Name",real_name)  \
-                      + (_build_dtdd("Requestor Department", req_content["requestor_dept"]) if "requestor_dept" in req_content else "") \
-                      + _build_dtdd("Due Date",req_content['due_date']) \
-                      + (_build_dtdd("Requestor Position",req_content["requestor_position"]) \
-                               if "requestor_position" in req_content else "") \
-                      + _build_dtdd("Report Source",report_txt) \
-                      + _build_dtdd("Problem Description",req_content["support_request_descr"]) \
-                      + "</dl>"
-            return result
-
-        super().__init__("rptsupport",get_subject,get_ticket_content,config_data)
-
-
-
-class SubmitTicketStudent(SubmitTicket):
-    def __init__(self):
-        def get_subject(req_content):
-            return req_content["subject"]
-
-        def get_ticket_content(real_name,req_content):
-            def build_progs(progs_selected):
-                def build_common_progs(common_progs):
-                    def build_common_faculty(common_progs,faculty):
-                        def build_prog(progs,prog):
-                            def build_subprogs(subprogs):
-                                if subprogs is True:
-                                    result = ": <i>All</i>"
-                                elif isinstance(subprogs,list) and len(subprogs) > 0:
-                                    result = ":<ul>" \
-                                    + "".join(["<li>" + html.escape(subprogs[i]) + "</li>" for i in range(len(subprogs))]) \
-                                    + "</ul>"
-                                else:
-                                    result = ""
-                                return result              
-                            subprogs = progs[prog]
-                            result = _shared_data["faculties_student"][faculty]["progs"][prog]["longhand"] \
-                                     + build_subprogs(subprogs)
-                            return result
-                        progs = common_progs[faculty]
-                        result = faculty + ":<ul>" \
-                                 +  "".join([ "<li>" + build_prog(progs,prog) + "</li>" for prog in progs]) \
-                                 + "</ul>"
-                        return result
-                    # here
-                    result = "Commonly requested programs:<ul>" \
-                           + "".join(["<li>" + build_common_faculty(common_progs,faculty) + "</li>" for faculty in common_progs]) \
-                           + "</ul>"
-                    return result
-                def build_other_plans_progs(other_plansprogs):
-                    result = "Other programs and plans:<ul>" \
-                            + "".join(["<li>" + html.escape(progplan) + "</li>" for progplan in other_plansprogs]) \
-                            + "</ul>"
-                    return result
-                result = "<dt>Programs and Plans:</dt><dd><ul style='padding-left:0;'>" \
-                         + ("<li>" + build_common_progs(progs_selected["common_progs"]) + "</li>" if "common_progs" in progs_selected \
-                                                                               else "") \
-                         + ("<li>" + build_other_plans_progs(progs_selected["other_plans_progs"]) + "</li>" if \
-                               "other_plans_progs" in progs_selected else "") \
-                         + "</ul></dd>"
+            def render_f_employee_info():
+                result = "<dl>" + \
+                              _build_dtdd("Employee full name",req_content['employee_name']) + \
+                              (_build_dtdd("Employee net id",req_content['employee_net_id']) if "employee_net_id" in req_content else "") + \
+                              _build_dtdd("Employee start date",req_content['start_date']) + \
+                         "</dl>"   
                 return result
-            result = "<dl>" \
-                     + _build_dtdd("Request Type","Student data") \
-                     + _build_dtdd("Subject",req_content["subject"]) \
-                     + _build_dtdd("Requestor Name",real_name) \
-                     + (_build_dtdd("Requestor Department", req_content["requestor_dept"]) if "requestor_dept" in req_content \
-                            else "") \
-                     + _build_dtdd("Due Date",req_content['due_date']) \
-                     + (_build_dtdd("Requestor Position",req_content["requestor_position"]) if "requestor_position" in req_content \
-                             else "") \
-                     + _build_requested_before(req_content.get("prev_report_info")) \
-                     + _build_dtdd("Report Purpose",req_content["report_purpose"]) \
-                     + (_build_terms("Terms",req_content["terms"]) if "terms" in req_content else "") \
-                     + (build_progs(req_content["progs"]) if "progs" in req_content else "") \
-                     + (_build_list_choices(req_content["list_choices"]) if "list_choices" in req_content else "") \
-                     + (_build_dtdd("Extra Details",req_content["extra_details"]) \
-                         if "extra_details" in req_content else "") \
-                     + _build_requested_fields(req_content["requested_fields"]) \
-                     + "</dl>"
-            return result
-        super().__init__("student",get_subject,get_ticket_content,config_data)
-
-
-
-
-class SubmitTicketAdmissions(SubmitTicket):
-    def __init__(self):
-        def get_subject(req_content):
-            return req_content["subject"]
-
-        def get_ticket_content(real_name,req_content):
-            def build_progs(progs_selected):
-                def build_first_year(progplans):
-                    def build_faculty(faculty):
-                        progs = progplans[faculty]
-                        result = faculty + ":<ul>" \
-                                  + "".join(["<li>" + _shared_data["faculties"][faculty][prog] + "</li>" for prog in progs]) \
-                                  + "</ul>"
-                        return result
-                    result = "First year:<ul>" \
-                             + "".join(["<li>" + build_faculty(faculty) + "</li>" for faculty in progplans]) \
-                             + "</ul>"
+            
+            def render_f_position_info():
+                def build_employee_position():
+                    job_title_data = req_content["job_title_path"]
+                    if job_title_data["job_title_type"]=="standard":
+                        result = " << ".join ([xlat[part] for part in job_title_data["job_title_path"]])
+                    else:
+                        result = html.escape(job_title_data["position_descr"]) + " <i>user input</i>"
+                    
                     return result
-                def build_upper_year(progplans):
-                    result = "Upper year:<ul>" \
-                             + "".join(["<li>" + progplan + "</li>" for progplan in progplans]) \
-                             + "</ul>"
+                def build_employee_roles():
+                    employee_roles = req_content["selected_roles"]
+                    result = "<ul>" + \
+                               "".join (["<li>" + role + "</li>" for role in employee_roles]) + \
+                             "</ul>"                    
                     return result
-                result = "<dt>Programs:</dt><dd><ul style='padding-left:0;'>" \
-                         + ("<li>" + build_first_year(progs_selected["first_year"]) + "</li>" \
-                               if "first_year" in progs_selected else "") \
-                         + ("<li>" + build_upper_year(progs_selected["upper_year"]) + "</li>" \
-                               if "upper_year" in progs_selected else "") \
-                         + "</ul></dd>" 
-                return result    
-            result = "<dl>" \
-                     + _build_dtdd("Request Type","Applicant data") \
-                     + _build_dtdd("Subject",req_content["subject"]) \
-                     + _build_dtdd("Requestor Name",real_name) \
-                     + (_build_dtdd("Requestor Department", req_content["requestor_dept"]) if "requestor_dept" in req_content \
-                            else "") \
-                     + _build_dtdd("Due Date",req_content['due_date']) \
-                     + (_build_dtdd("Requestor Position",req_content["requestor_position"]) if "requestor_position" in req_content \
-                             else "") \
-                     + _build_requested_before(req_content.get("prev_report_info")) \
-                     + _build_dtdd("Report Purpose",req_content["report_purpose"]) \
-                     + _build_terms("Admit Terms",req_content["terms"]) \
-                     + build_progs(req_content["progs"]) \
-                     + _build_list_choices(req_content["list_choices"]) \
-                     + (_build_dtdd("Extra Details",req_content["extra_details"]) \
-                         if "extra_details" in req_content else "") \
-                     + _build_requested_fields(req_content["requested_fields"]) \
-                     + "</dl>"
-            return result
+                    
+                replacement_pos_str = "Yes" if req_content['replacement_pos'] else 'No'
+                result = "<dl>" + \
+                              _build_dtdd("Is the employee replacing a former/outgoing one",
+                                          replacement_pos_str) + \
+                              (_build_dtdd("Name of former/outgoing employee",req_content['former_employee']) if "former_employee" in req_content else "") + \
+                              _build_dtdd("Employee position",build_employee_position(),False) + \
+                              (_build_dtdd("Employee roles",build_employee_roles(),False) if "selected_roles" in req_content else "") + \
+                         "</dl>"   
+                return result
 
-        super().__init__("admissions",get_subject,get_ticket_content,config_data)
+
+
+            def render_f_work_model():
+                result = "<dl>" + \
+                                _build_dtdd("Employee work model",xlat[req_content['work_model_selection']]) + \
+                                (_build_dtdd("Employee in-office location",xlat[req_content['room_selection']]) if 'room_selection' in req_content else "") + \
+                                (_build_dtdd("Employee in-office sub-location",req_content['room_sublocation']) if 'room_sublocation' in req_content else "") + \
+                                (_build_dtdd("Employee personal phone extension info",xlat[req_content['phone_ext_choice']]) if 'phone_ext_choice' in req_content else "") + \
+                        "</dl>"
+                return result
+
+            def render_f_hardware_info():
+                result = "<dl>" + \
+                                _build_dtdd("Employee hardware configuration",xlat[req_content['hw_choice']]) + \
+                                (_build_dtdd("Reason for provisioning of laptop",req_content['laptop_explanation']) if 'laptop_explanation' in req_content else "") + \
+                        "</dl>"
+                return result
+
+            def render_f_supplementary_prnts():
+                    s_prnts = req_content['supp_print_choice']
+                    result = "<ul>" + \
+                                "".join (["<li>" + xlat[sp] + "</li>" for sp in s_prnts]) + \
+                            "</ul>"    
+                    return result
+            def render_f_file_shares():
+                    s_prnts = req_content['selected_file_shares']
+                    result = "<ul>" + \
+                                "".join (["<li>" + html.escape(sp) + "</li>" for sp in s_prnts]) + \
+                            "</ul>"    
+                    return result
+
+            def render_f_supplementary_mls():
+                    s_prnts = req_content['supp_ml_choice']
+                    result = "<ul>" + \
+                                "".join (["<li>" + xlat[sp] + "</li>" for sp in s_prnts]) + \
+                            "</ul>"    
+                    return result
+            sections = [
+                {
+                    "header": "Employee HR Info",
+                    "render_f": render_f_employee_info
+                },
+                {
+                    "header": "Employee Position Info",
+                    "render_f": render_f_position_info
+                },
+                {
+                    "header": "Employee Work-Model and Location Info",
+                    "render_f": render_f_work_model
+                }, 
+                {
+                    "header": "Employee Hardware Requirements",
+                    "render_f": render_f_hardware_info
+                },
+                {
+                    "header": "Supplementary Printers",
+                    "render_f": render_f_supplementary_prnts,
+                    "condition": "supp_print_choice" in req_content
+                },
+                {
+                    "header": "File Share Locations",
+                    "render_f": render_f_file_shares,
+                    "condition": "selected_file_shares" in req_content
+                },
+                {
+                    "header": "Supplementary Mailing Lists ",
+                    "render_f": render_f_supplementary_mls,
+                    "condition": "supp_ml_choice" in req_content
+                },
+
+
+
+
+
+
+
+            ]
+            result = "".join([("<h4>" + section["header"] +"</h4>" + section["render_f"]() if section.get("condition",True) else "") for section in sections ])
+            return result
+        super().__init__("onboarding",get_subject,get_ticket_content,config_data)
+
+
+
 
