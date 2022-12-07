@@ -71,7 +71,6 @@
         "gor110": "RM 110",
         "gor125": "RM 125",
         "gor225": "RM 225",
-        "gor200": "RM 200", 
         "has_phone_not_required": "New employee already has an existing personal phone extension but no longer requires it in their new role.",
         "has_phone_keep": "New employee already has an existing personal phone extension and will continue to require it in their new role.",
         "no_phone_not_required": "New employee does not have an existing personal phone extension and will not require one.",
@@ -174,11 +173,9 @@
         "remote"
     ],
     "rooms": [
-        "gor100",
         "gor110",
         "gor125",
-        "gor225",
-        "gor200"
+        "gor225"
     ],
     "phone_extensions":[
         "has_phone_not_required",
