@@ -673,7 +673,7 @@ export default {
 
          work_model_selection: "hybrid",
          rooms: this.$store.state.init_data.rooms,
-         room_selection: "gor100",
+         room_selection: "gor110",
          room_sublocation: "",
          phone_ext_options: this.$store.state.init_data.phone_extensions,
          phone_ext_choice: "has_phone_not_required",
@@ -720,7 +720,7 @@ export default {
          this.position_descr='';
          this.selected_roles=[];
          this.work_model_select="hybrid";
-         this.room_selection="gor100";
+         this.room_selection="gor110";
          this.room_sublocation="";
          this.phone_ext_choice="has_phone_not_required";
          this.hw_choice_selection="hw_choice1";

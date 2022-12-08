@@ -61,7 +61,7 @@
         "projects": "Projects",
         "analysis": "Analysis",
         "it_support": "IT Support",
-        "jr_analyst": "Junior Analyst",
+        "jr_ba": "Junior Business Analyst",
         "tech_spec": "Technical Support Specialist",
         "tech_web": "Technical/Web Support",
         "hybrid": "Hybrid",
@@ -86,10 +86,8 @@
         "psautodeprorpt_ml": "PSAUtoDeproRpt-DL"
     },
     "org_tree": {
-        "registrar": {
-            "registrar": [],
-            "reg_assist": []
-        },
+        "registrar": [],
+        "reg_assist": [],
         "awd": {
             "aur": [],
             "bus_op_analysis": {
@@ -102,11 +100,13 @@
                 "awd_officer": []
             },
             "fin_aid": {
+                "director": [],
                 "ba": [],
                 "awd_officer": ["in_course","admission_awards","oop_loans","us_loans","osap"],
                 "stud_resource_assist": ["admission_awards", "in_course"]
             },
             "osap_loan":{
+                "sen_awd_officer": [],
                 "awd_officer": ["osap", "osap_burs" ],
                 "stud_resource_assist": ["loan_progs"],
                 "stud_client": []
@@ -125,11 +125,6 @@
                 "manager": [],
                 "tm_ld_reg_fees": [],
                 "reg_fees_admin": []
-            },
-            "tt": {
-                "manager": [],
-                "lead_tt_analyst": [],
-                "tt_admin": []
             },
             "exams_teach_assess":{
                 "manager": [],
@@ -161,12 +156,17 @@
                 "manager": [],
                 "projects": {
                     "ba": [],
-                    "jr_analyst": []
+                    "jr_ba": []
                 },
                 "it_support": {
                     "tech_spec": [],
                     "tech_web": []
                 }
+            },            
+            "tt": {
+                "manager": [],
+                "lead_tt_analyst": [],
+                "tt_admin": []
             }
         }
         
