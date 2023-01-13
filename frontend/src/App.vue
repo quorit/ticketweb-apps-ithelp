@@ -14,7 +14,6 @@
           transition="scale-transition"
           width="40"
         />
-
         <v-img
           alt="Vuetify Name"
           class="shrink mt-1 hidden-sm-and-down"
@@ -24,7 +23,6 @@
           width="100"
         />
       </div>
-
       <v-spacer></v-spacer> -->
       <span class="mr-2">
             OUR/UAR Service Ticket Request Forms {{ mode_text }}
@@ -60,19 +58,12 @@
 </template>
 
 <script>
-
 const authsystem_network = require ("authsystem_network");
 import {get_error_params} from './js_extra/web_project_error.js'
-
-
 const config_data = JSON.parse(process.env.VUE_APP_CONFIG_DATA);
-
 const authsystem_path = config_data.vue_app_path_roots.authsystem;
-
 export default {
   name: 'App',
-
-
   data: () =>  
   {
     var banner_color;
@@ -100,15 +91,12 @@ export default {
       
       this.$router.go() //reloads page which should cause cause a re-route to the login page because the session cookie go mauled
     }
-
   },
   //beforeMount: async function(){
   //  if (this.$route.name != 'login' && this.$route.name != 'error_page'){
   //        await authsystem_network.get_app_token(authsystem_path,"ithelp").then(app_token => this.$store.dispatch('set_user_data',app_token));
   //  }
-
   //},
-
   mounted: async function(){
     try { 
       await this.$store.dispatch('set_init_data');
@@ -119,9 +107,6 @@ export default {
       });            
     }
    
-
-
-
   }
 };
 </script>

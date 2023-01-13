@@ -1,4 +1,3 @@
-const { defineConfig } = require('@vue/cli-service')
 const path = require("path")
 
 module.exports = {
@@ -16,7 +15,7 @@ module.exports = {
                ['^' + process.env.VUE_APP_SHARED_DATA_PATH]: '/'
             }
          },
-	 ['^' + process.env.VUE_APP_AUTHSYSTEM_PATH]: {
+         ['^' + process.env.VUE_APP_AUTHSYSTEM_PATH]: {
               target: process.env.VUE_APP_AUTHSYSTEM_SERVER_URL,
               pathRewrite: {
                 ['^' + process.env.VUE_APP_AUTHSYSTEM_PATH]: '/'
