@@ -26,12 +26,14 @@
 
 
                <v-btn v-if="submission_step"
+                  ref="submitnext"
                   class="ma-2"
                   @click="submit_ticket"
                   :disabled="processing_request">
                   {{ submit_button_label }}
                </v-btn>
                <v-btn v-else
+                  ref="submitnext"
                   class="ma-2"
                   @click="next_page_plus">
                   NEXT PAGE
@@ -109,7 +111,10 @@ export default {
 
       validate_form: function (){
          return (new Promise((resolve,reject)=>{
-            const validation_result = this.$refs.form.validate();
+            var validation_result;
+            
+            validation_result = this.$refs.form.validate()  
+
             //const validation_result = this.validateFunc(page_num)();
             if (validation_result){
                resolve(true);  
@@ -122,18 +127,25 @@ export default {
 
    
       next_page_plus: async function () {
-         //this really shouldn't be async now. no point
+
+
          this.submit_fail=false;
-         try {
-            console.log(this.step_num);
-            await this.validate_form();
-             this.next_page();
-         }catch(e){
-            this.submit_error=e;
+         await new Promise(r => setTimeout(r, 1));
+         //The reason for this nonsense is this github issue
+         //https://github.com/vuetifyjs/vuetify/issues/7329
+         //without this you can enter stuff in a combobox, and *before hitting enter*
+         //hit "next page". When you do that the rules for the combobox are checked
+         //*after* and form.validate returns *true* even though it should return false.
+         //Sleeping just one milisecond seems to deal with this.
+
+         const validation_result=this.$refs.form.validate();
+         if(validation_result){
+            this.next_page();
+         }else{
+            this.submit_error=new FormValidationError();
             this.processing_request=false;
             this.submit_fail=true;
          }
-
       },
       submit_ticket: async function () {
          this.processing_request=true;
@@ -188,7 +200,6 @@ export default {
    watch:{
    },
    mounted: function() {
-      this.$emit('reset_func_set',this.reset_step);
    }
 }
 </script>

@@ -21,9 +21,9 @@
       </v-stepper-step>
 
       <StepShell
+       ref="step1"
        step_num="1"
        :next_page="next_page"
-       @reset_func_set="reset_func_set(0,$event)"
        >
 
          <v-row>
@@ -76,6 +76,7 @@
             </v-col>
          </v-row>
          
+
       </StepShell>
          <v-stepper-step
        :complete="step_num > 2"
@@ -85,10 +86,10 @@
       </v-stepper-step>
       
       <StepShell
+       ref="step2"
        step_num="2"
        :next_page="next_page"
        :prev_page="prev_page"
-       @reset_func_set="reset_func_set(1,$event)"
        >
                 
             <v-row>
@@ -185,10 +186,10 @@
          Employee work-model and location information.
       </v-stepper-step>
       <StepShell
+      ref="step3"
        step_num="3"
        :next_page="next_page"
        :prev_page="prev_page"
-       @reset_func_set="reset_func_set(2,$event)"
        >
  
                 <h3>What is the new employee's work model?</h3>
@@ -221,17 +222,7 @@
                v-model="room_sublocation"
                >
                </v-text-field>
-               <h3>Personal phone extension options</h3>
-                <v-radio-group v-model="phone_ext_choice">
-                  <v-radio
-                   v-for="choice in phone_ext_options"
-                   :key="choice"
-                   :label="xlat[choice]"
-                   :value="choice"
-                   
-                  >
-                  </v-radio>
-                </v-radio-group>
+           
 
 
 
@@ -247,10 +238,10 @@
       
       </v-stepper-step>
       <StepShell
+       ref="step4"
        step_num="4"
        :next_page="next_page"
        :prev_page="prev_page"
-       @reset_func_set="reset_func_set(3,$event)"
        >
       
                 <h3>What hardware configuration should the new employee have?</h3>
@@ -275,19 +266,114 @@
                >
                </v-text-field>
                </div>
+               <h3>Specify any additional hardware requirements</h3>
+               <v-textarea
+               outlined
+               v-model="extra_hardware_reqs"
+               maxlength="200"
+        ></v-textarea>
             </StepShell>
-         <v-stepper-step
+
+
+
+
+
+
+
+
+
+
+            <v-stepper-step
        step="5"
        :complete="step_num > 5"
+      >
+         Employee phone requirements.
+
+      
+      </v-stepper-step>
+      <StepShell
+       ref="step5"
+       step_num="5"
+       :next_page="next_page"
+       :prev_page="prev_page"
+       
+       >
+
+       <h3>Personal phone extension options</h3>
+                <v-radio-group v-model="phone_ext_choice">
+                  <v-radio
+                   v-for="choice in phone_ext_options"
+                   :key="choice"
+                   :label="xlat[choice]"
+                   :value="choice"
+                   
+                  >
+                  </v-radio>
+                </v-radio-group>
+
+      <h3>Shared telephone groups</h3>
+
+      <v-alert
+      border="top"
+      colored-border
+      type="info"
+      elevation="2"
+    >
+      A <i>call queue</i> routes calls to each line in a set of telephone lines sequentially.
+      A <i>ring group</i> routes calls to all lines in a set of a set of telephone lines simultaenously.
+   </v-alert>
+    <h4>Call queues</h4>
+      <v-combobox
+                  v-model="call_queues"
+                  :items="[]"
+                 label="Enter in any call queues the new employees' telephone line should belong to."
+                 multiple
+                 chips
+                 clearable
+          />
+          <h4>Ring groups</h4>
+      <v-combobox
+                  v-model="ring_groups"
+                  :items="[]"
+                 label="Enter in any ring groups the new employees' telephone line should belong to."
+                 multiple
+                 chips
+                 clearable
+          />
+            </StepShell>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         <v-stepper-step
+       step="6"
+       :complete="step_num > 6"
       >
          Supplemental Printers.
       </v-stepper-step>
 
       <StepShell
-       step_num="5"
+       ref="step6"
+       step_num="6"
        :next_page="next_page"
        :prev_page="prev_page"
-       @reset_func_set="reset_func_set(4,$event)"
        >
                 <h3>Select any needed supplementary printers needed by the new employee</h3>
                 <v-checkbox 
@@ -301,16 +387,16 @@
                   />
         </StepShell>
          <v-stepper-step
-       step="6"
-       :complete="step_num > 6"
+       step="7"
+       :complete="step_num > 7"
       >
          File share locations.
       </v-stepper-step>
       <StepShell
-       step_num="6"
+       ref="step7"
+       step_num="7"
        :next_page="next_page"
        :prev_page="prev_page"
-       @reset_func_set="reset_func_set(5,$event)"
        >
                 <h3>Enter in any required file locations</h3>
 
@@ -326,20 +412,21 @@
    </StepShell>
 
          <v-stepper-step
-       step="7"
-       :complete="step_num > 7"
+       step="8"
+       :complete="step_num > 8"
       >
-         Supplementary mailing lists.
+         Supplementary mailing lists and shared email accounts.
       </v-stepper-step>
       <StepShell
-       step_num="7"
+       ref="step8"
+       step_num="8"
        :next_page="next_page"
        :prev_page="prev_page"
-       @reset_func_set="reset_func_set(6,$event)"
        >
 
-                <h3>Select any needed supplementary mailing lists needed by the new employee</h3>
+                <h3>Supplementary mailing lists</h3>
                 <v-checkbox 
+                  ref="supp_ml_ref"
                   v-for="supp_ml in supp_mls" 
                   multiple 
                   v-model="supp_ml_choice" 
@@ -348,28 +435,63 @@
                  :label="xlat[supp_ml]"
                  hide-details
                   />
+                  <br/>
+                  <h3>Shared email accounts</h3>
+               <v-combobox
+                ref="shared_emails_ref"
+                v-model="shared_emails"
+               :items="[]"
+               multiple
+               chips 
+               clearable
+               :rules="shared_email_rules">
+             <template v-slot:label>
+               Enter in any shared email accounts required by the new employee (e.g <i>timetabl@queensu.ca)</i>
+             </template>
+            </v-combobox>
    </StepShell>
 
+   <v-stepper-step
+       step="9"
+       :complete="step_num > 9"
+      >
+         Supplemental specialised software items.
+      </v-stepper-step>
+      <StepShell
+       ref="step9"
+       step_num="9"
+       :next_page="next_page"
+       :prev_page="prev_page"
+       >
+                <v-combobox
+                  v-model="spec_software_items"
+                  :items="[]"
+                 label="Enter in any required supplemental specialised software items"
+                 multiple
+                 chips
+                 clearable
+          />
 
+   </StepShell>
 
          <v-stepper-step
-       step="8"
+       step="10"
       >
          Review and submit
       </v-stepper-step>
       <StepShell
-       step_num="8"
+       ref="step10"
+       step_num="10"
        :prev_page="prev_page"
        submission_step
        :submission_data="submission_data"
        submit_button_label="SUBMIT ONBOARDING REQUEST"
        @ticket_id_set="set_ticket_id"
-       @reset_func_set="reset_func_set(7,$event)"
        >
 
 
 
-       <v-row style="background-color:midnightblue;color:white">
+       <v-row style="background-color:#0D47A1;color:white">
          <v-col cols="1">1.</v-col>
          <v-col cols="11"><h4 >Employee HR Info</h4></v-col>
       </v-row>
@@ -392,7 +514,7 @@
          </dl>
          </v-col>
       </v-row>
-      <v-row style="background-color:midnightblue;color:white">
+      <v-row style="background-color:#0D47A1;color:white">
          <v-col cols="1">2.</v-col>
          <v-col cols="11"><h4 >Employee Position Info</h4></v-col>
       </v-row>
@@ -429,7 +551,7 @@
          </dl>
          </v-col>
       </v-row>
-      <v-row style="background-color:midnightblue;color:white">
+      <v-row style="background-color:#0D47A1;color:white">
          <v-col cols="1">3.</v-col>
          <v-col cols="11"><h4 >Employee Work-Model and Location Info</h4></v-col>
       </v-row>
@@ -449,16 +571,13 @@
          <dd v-if="'room_sublocation' in submission_data.json">
             {{ submission_data.json.room_sublocation }}
          </dd>
-         <dt v-if="'phone_ext_choice' in submission_data.json"><b>Personal phone extension info</b></dt>
-         <dd v-if="'phone_ext_choice' in submission_data.json">
-            {{ xlat[submission_data.json.phone_ext_choice] }}
-         </dd>
+         
 
          </dl>
          </v-col>
       </v-row>
       
-      <v-row style="background-color:midnightblue;color:white">
+      <v-row style="background-color:#0D47A1;color:white">
          <v-col cols="1">4.</v-col>
          <v-col cols="11"><h4 >Employee Hardware Requirements</h4></v-col>
       </v-row>
@@ -474,11 +593,61 @@
          <dd v-if="'laptop_explanation' in submission_data.json">
             {{ submission_data.json.laptop_explanation }}
          </dd>
+         <dt v-if="'extra_hardware_reqs' in submission_data.json"><b>Extra hardware requirements</b></dt>
+         <dd v-if="'extra_hardware_reqs' in submission_data.json">
+            {{ submission_data.json.extra_hardware_reqs }}
+         </dd>
+
+
+
          </dl>
          </v-col>
       </v-row>
-      <v-row style="background-color:midnightblue;color:white">
+
+      <v-row style="background-color:#0D47A1;color:white">
          <v-col cols="1">5.</v-col>
+         <v-col cols="11"><h4 >Employee Phone Requirements</h4></v-col>
+      </v-row>
+      <v-row>
+         <v-col></v-col>
+         <v-col cols="11">
+         <dl>
+           <dt v-if="'phone_ext_choice' in submission_data.json"><b>Personal phone extension info</b></dt>
+           <dd v-if="'phone_ext_choice' in submission_data.json">
+            {{ xlat[submission_data.json.phone_ext_choice] }}
+           </dd>
+           <dt v-if="'call_queues' in submission_data.json"><b>Call queues</b></dt>
+           <dd v-if="'call_queues' in submission_data.json">
+            <ul>
+               <li
+                v-for="(call_queue,index) in submission_data.json.call_queues"
+                :key="index"
+               >
+                  {{ call_queue }}
+               </li>
+            </ul>
+           </dd>
+           
+           <dt v-if="'ring_groups' in submission_data.json"><b>Ring groups</b></dt>
+           <dd v-if="'ring_groups' in submission_data.json">
+            <ul>
+               <li
+                v-for="(ring_group,index) in submission_data.json.ring_groups"
+                :key="index"
+               >
+                  {{ ring_group }}
+               </li>
+            </ul>
+           </dd>
+
+         </dl>
+         </v-col>
+      </v-row>
+
+
+
+      <v-row style="background-color:#0D47A1;color:white">
+         <v-col cols="1">6.</v-col>
          <v-col cols="11"><h4 >Supplemental Printers</h4></v-col>
       </v-row>
       <v-row>
@@ -499,8 +668,8 @@
          </dl>
          </v-col>
       </v-row>
-      <v-row style="background-color:midnightblue;color:white">
-         <v-col cols="1">6.</v-col>
+      <v-row style="background-color:#0D47A1;color:white">
+         <v-col cols="1">7.</v-col>
          <v-col cols="11"><h4 >File Share Locations</h4></v-col>
       </v-row>
       <v-row>
@@ -521,9 +690,9 @@
          </dl>
          </v-col>
       </v-row>
-      <v-row style="background-color:midnightblue;color:white">
-         <v-col cols="1">7.</v-col>
-         <v-col cols="11"><h4 >Supplementary Mailing Lists</h4></v-col>
+      <v-row style="background-color:#0D47A1;color:white">
+         <v-col cols="1">8.</v-col>
+         <v-col cols="11"><h4 >Supplementary Mailing Lists and Shared Email Accounts</h4></v-col>
       </v-row>
       <v-row>
          <v-col></v-col>
@@ -540,10 +709,42 @@
                </li>
             </ul>
          </dd>
+         <dt v-if="'shared_emails' in submission_data.json"><b>Shared email accounts needed by new employee</b></dt>
+         <dd v-if="'shared_emails' in submission_data.json">
+            <ul>
+               <li
+                v-for="(shared_email,index) in submission_data.json.shared_emails"
+                :key="index"
+               >
+                  {{ shared_email }}
+               </li>
+            </ul>
+         </dd>
          </dl>
          </v-col>
       </v-row>
-
+      <v-row style="background-color:#0D47A1;color:white">
+         <v-col cols="1">9.</v-col>
+         <v-col cols="11"><h4 >Supplementary Specialised Software Items</h4></v-col>
+      </v-row>
+      <v-row>
+         <v-col></v-col>
+         <v-col cols="11">
+         <dl>
+         <dt v-if="'spec_software_items' in submission_data.json"><b>Supplementary specialised software items required by new employee</b></dt>
+         <dd v-if="'spec_software_items' in submission_data.json">
+            <ul>
+               <li
+                v-for="(selected_item,index) in submission_data.json.spec_software_items"
+                :key="index"
+               >
+                  {{ selected_item }}
+               </li>
+            </ul>
+         </dd>
+         </dl>
+         </v-col>
+      </v-row>
 
       </StepShell>
 
@@ -636,29 +837,7 @@ export default {
          ],
 
          startDateRules: [
-            v => {
-               if (!v){
-                  return 'Start date is required.'
-               } //else {
-               //   const rightNow = new Date();
-               //   const [year, month_str_pre, day_str_pre] = [rightNow.getFullYear(),"0" + (rightNow.getMonth() + 1), "0" + rightNow.getDate()];
-               //   const month_str = month_str_pre.substr(month_str_pre.length -2);
-               //   const day_str = day_str_pre.substr(day_str_pre.length -2);
-               //   const date_str = year + "-" + month_str + "-" + day_str;
-               //   const today = Date.parse(date_str);
-               //   const input_date = Date.parse(v);
-               //   const time_diff = (input_date - today);
-               //   if (time_diff < 0){
-               //      return 'Due date cannot be in the past';
-               //   }else{
-               //      return true;
-               //   }
-
-               //}
-               else {
-                  return true;
-               }
-            }
+            v => !!v || "Start date is required"
          ],
 
          route_type: route_type,
@@ -686,22 +865,39 @@ export default {
          supp_mls: this.$store.state.init_data.supp_mls,
          supp_ml_choice: [],
          selected_file_shares: [],
-         reset_funcs: new Array(total_steps-1),
-         ticket_id: null
+         reset_funcs: [],
+         //reset_funcs: new Array(total_steps-1),
+         ticket_id: null,
+         extra_hardware_reqs: "",
+         call_queues: [],
+         ring_groups: [],
+         spec_software_items: [],
+         shared_emails: [],
+         shared_email_rules: [
+            v => {
+               var email;
+               for (email of v){
+                  if (!(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/).test(email)){
+                     return `Invalid email: '${email}'` 
+                  }
+               }
+               return true;
+            }
+         ]
 
       };
    },
    methods: {
-      reset_func_set: function(page_num,event){
-         this.reset_funcs[page_num]=event;
+      //reset_func_set: function(page_num,event){
+         // this.reset_funcs[page_num]=event;
+         //don't do anyhing
 
-      },
+      //},
       set_ticket_id: function(ticket_id){
          this.ticket_id=ticket_id;
       },
 
       next_page: function(){
-         console.log("CALLED")
          this.step_num++;
       },
       prev_page: function(){
@@ -728,6 +924,12 @@ export default {
          this.supp_print_choice="";
          this.supp_ml_choice="";
          this.selected_file_shares=[];
+         this.extra_hardware_reqs="";
+         this.call_queues=[];
+         this.ring_groups=[];
+         this.spec_software_items=[];
+         this.shared_emails=[];
+
          this.$refs.job_tree.updateAll(false);
 
          var reset_func;
@@ -738,7 +940,6 @@ export default {
 
    },
    computed:{
-
       role_choices: function(){
          if (this.job_title_ids.length==0 || this.other_job_title_selected){
             return [];
@@ -833,10 +1034,19 @@ export default {
             if(this.room_sublocation){
                json.room_sublocation=this.room_sublocation;
             }
-            json.phone_ext_choice=this.phone_ext_choice;
+         }
+         json.phone_ext_choice=this.phone_ext_choice;
+         if(this.call_queues.length>0){
+               json.call_queues=this.call_queues;
+         }
+         if (this.ring_groups.length>0){
+               json.ring_groups=this.ring_groups;
          }
          if(this.hw_choice=="hw_choice2" || this.hw_choice=="hw_choice4"){
             json.laptop_explanation=this.laptop_explanation;
+         }
+         if(this.extra_hardware_reqs){
+            json.extra_hardware_reqs=this.extra_hardware_reqs
          }
          if(this.supp_print_choice.length>0){
             json.supp_print_choice=this.supp_print_choice;
@@ -844,10 +1054,19 @@ export default {
          if(this.selected_file_shares.length>0){
             json.selected_file_shares=this.selected_file_shares;
          }
+         if(this.spec_software_items.length>0){
+            json.spec_software_items=this.spec_software_items;
+         }
+
+
          if(this.supp_ml_choice.length>0){
             json.supp_ml_choice=this.supp_ml_choice;
          }
-
+         
+         if(this.shared_emails.length>0){
+            json.shared_emails=this.shared_emails;
+         }
+         
 
  
 
@@ -861,6 +1080,7 @@ export default {
 
       
    },
+
    watch:{ 
       work_model_selection(new_val,old_val){
          console.log(old_val);
@@ -870,9 +1090,21 @@ export default {
          }else if (old_val != "hybrid" && new_val == "hybrid"){
             this.hw_choice="hw_choice1"
          }
-      }
-
+      },
    },
+   mounted(){
+      this.reset_funcs=[
+         this.$refs.step1.reset_step,
+         this.$refs.step2.reset_step,
+         this.$refs.step3.reset_step,
+         this.$refs.step4.reset_step,
+         this.$refs.step5.reset_step,
+         this.$refs.step6.reset_step,
+         this.$refs.step7.reset_step,
+         this.$refs.step8.reset_step,
+         this.$refs.step9.reset_step
+   ]
+   }
 }
 </script>
 

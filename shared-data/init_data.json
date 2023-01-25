@@ -56,7 +56,7 @@
         "campus_support": "Campus Solutions Support Analyst",
         "tt": "Timetabling",
         "lead_tt_analyst": "Lead Timetable Analyst",
-        "tt_admin": "Timetableing Administrator",
+        "tt_admin": "Timetabling Administrator",
         "proj_analysis": "Projects and Analysis",
         "projects": "Projects",
         "analysis": "Analysis",
@@ -83,7 +83,10 @@
         "frontdsk_prnt": "Frontdesk printer",
         "eventuse_ml": "eventuser-l",
         "timetabl_ml": "timetabl-l",
-        "psautodeprorpt_ml": "PSAUtoDeproRpt-DL"
+        "psautodeprorpt_ml": "PSAUtoDeproRpt-DL",
+        "rm125_hp_lj_p3015": "Room 125 HP LaserJet P3015",
+        "rm110_hp_lj_600_m601": "Room 225 HP LaserJet 600 M601",
+        "rm225_hp_lj_600_m601": "Room 225 HP LaserJet 600 M601"
     },
     "org_tree": {
         "registrar": [],
@@ -200,7 +203,10 @@
     },
     "supp_prnts":[
         "transcript_prnt",
-        "frontdsk_prnt"
+        "frontdsk_prnt",
+        "rm125_hp_lj_p3015",
+        "rm110_hp_lj_600_m601",
+        "rm225_hp_lj_600_m601"
     ],
     "supp_mls":[
         "eventuse_ml",

@@ -329,7 +329,7 @@ class SubmitTicketOnboarding(SubmitTicket):
                 def build_employee_roles():
                     employee_roles = req_content["selected_roles"]
                     result = "<ul>" + \
-                               "".join (["<li>" + role + "</li>" for role in employee_roles]) + \
+                               "".join (["<li>" + html.escape(role) + "</li>" for role in employee_roles]) + \
                              "</ul>"                    
                     return result
                     
@@ -350,7 +350,6 @@ class SubmitTicketOnboarding(SubmitTicket):
                                 _build_dtdd("Employee work model",xlat[req_content['work_model_selection']]) + \
                                 (_build_dtdd("Employee in-office location",xlat[req_content['room_selection']]) if 'room_selection' in req_content else "") + \
                                 (_build_dtdd("Employee in-office sub-location",req_content['room_sublocation']) if 'room_sublocation' in req_content else "") + \
-                                (_build_dtdd("Employee personal phone extension info",xlat[req_content['phone_ext_choice']]) if 'phone_ext_choice' in req_content else "") + \
                         "</dl>"
                 return result
 
@@ -358,8 +357,29 @@ class SubmitTicketOnboarding(SubmitTicket):
                 result = "<dl>" + \
                                 _build_dtdd("Employee hardware configuration",xlat[req_content['hw_choice']]) + \
                                 (_build_dtdd("Reason for provisioning of laptop",req_content['laptop_explanation']) if 'laptop_explanation' in req_content else "") + \
+                                (_build_dtdd("Extra hardware requirements",req_content['extra_hardware_reqs']) if 'extra_hardware_reqs' in req_content else "") + \
                         "</dl>"
                 return result
+
+            def render_f_phone_info():
+                def build_ring_groups():
+                    ring_groups=req_content['ring_groups']
+                    return "<ul>" + \
+                               "".join (["<li>" + html.escape(ring_group) + "</li>" for ring_group in ring_groups]) + \
+                           "</ul>"
+                def build_call_queues():
+                    call_queues=req_content['call_queues']
+                    return "<ul>" + \
+                               "".join (["<li>" + html.escape(call_queue) + "</li>" for call_queue in call_queues]) + \
+                           "</ul>"
+                result = "<dl>" + \
+                             _build_dtdd("Employee personal phone extension info",xlat[req_content['phone_ext_choice']]) + \
+                             (_build_dtdd("Ring groups",build_ring_groups(),False) if "ring_groups" in req_content else "") + \
+                             (_build_dtdd("Call queues",build_call_queues(),False) if "call_queues" in req_content else "") + \
+                        "</dl>"
+                return result
+
+
 
             def render_f_supplementary_prnts():
                     s_prnts = req_content['supp_print_choice']
@@ -375,9 +395,25 @@ class SubmitTicketOnboarding(SubmitTicket):
                     return result
 
             def render_f_supplementary_mls():
-                    s_prnts = req_content['supp_ml_choice']
+                def build_supp_mls():
+                    supp_ml_choice=req_content['supp_ml_choice']
+                    return "<ul>" + \
+                               "".join (["<li>" + supp_ml + "</li>" for supp_ml in supp_ml_choice]) + \
+                           "</ul>"
+                def build_shared_emails():
+                    shared_emails=req_content['shared_emails']
+                    return "<ul>" + \
+                               "".join (["<li>" + html.escape(shared_email) + "</li>" for shared_email in shared_emails]) + \
+                           "</ul>"
+                result = "<dl>" + \
+                             (_build_dtdd("Supplementart mailing lists",build_supp_mls(),False) if "supp_ml_choice" in req_content else "") + \
+                             (_build_dtdd("Shared emails",build_shared_emails(),False) if "shared_emails" in req_content else "") + \
+                        "</dl>"
+                return result
+            def render_f_spec_software():
+                    s_prnts = req_content['spec_software_items']
                     result = "<ul>" + \
-                                "".join (["<li>" + xlat[sp] + "</li>" for sp in s_prnts]) + \
+                                "".join (["<li>" + html.escape(sp) + "</li>" for sp in s_prnts]) + \
                             "</ul>"    
                     return result
             sections = [
@@ -398,6 +434,11 @@ class SubmitTicketOnboarding(SubmitTicket):
                     "render_f": render_f_hardware_info
                 },
                 {
+                    "header": "Employee Phone requirements",
+                    "render_f": render_f_phone_info,
+                },
+
+                {
                     "header": "Supplementary Printers",
                     "render_f": render_f_supplementary_prnts,
                     "condition": "supp_print_choice" in req_content
@@ -408,10 +449,15 @@ class SubmitTicketOnboarding(SubmitTicket):
                     "condition": "selected_file_shares" in req_content
                 },
                 {
-                    "header": "Supplementary Mailing Lists ",
+                    "header": "Supplementary Mailing Lists and Shared Emails",
                     "render_f": render_f_supplementary_mls,
-                    "condition": "supp_ml_choice" in req_content
+                    "condition": "supp_ml_choice" in req_content or "shared_emails" in req_content
                 },
+                {
+                    "header": "Specialised supplentary software",
+                    "render_f": render_f_spec_software,
+                    "condition": "spec_software_items" in req_content
+                }
 
 
 
