@@ -4,6 +4,8 @@
     "xlat": {
         "registrar": "University Registar",
         "reg_assist": "Assistant to the University Registrar",
+        "srv_strategy": "Director of Service Strategy and Operations",
+        "finance_admin": "Director of Finance and Aministrative Operations",
         "rec_ser": "Records and Services",
         "awd": "Student Awards",
         "sis": "Student Information Systems",
@@ -85,12 +87,14 @@
         "timetabl_ml": "timetabl-l",
         "psautodeprorpt_ml": "PSAUtoDeproRpt-DL",
         "rm125_hp_lj_p3015": "Room 125 HP LaserJet P3015",
-        "rm110_hp_lj_600_m601": "Room 225 HP LaserJet 600 M601",
+        "rm110_hp_lj_600_m601": "Room 110 HP LaserJet 600 M601",
         "rm225_hp_lj_600_m601": "Room 225 HP LaserJet 600 M601"
     },
     "org_tree": {
         "registrar": [],
         "reg_assist": [],
+        "srv_strategy": [],
+        "finance_admin":[],
         "awd": {
             "aur": [],
             "bus_op_analysis": {
@@ -118,7 +122,6 @@
         "rec_ser": {
             "aur": [],
             "stud_financials": {
-                "director": [],
                 "stud_acc_sp": [],
                 "stud_acc_admin": [],
                 "fin_proc_manage": [],
@@ -139,6 +142,16 @@
                     "crse_eval_admin": []
                 }
                 
+            },
+            "stud_srv_conv": {
+                "manager":[],
+                "sen_clerk_srv": [],
+                "conv_comm_admin": [],
+                "srv_info_assist": [],
+                "trans_assist": [],
+                "tech_support_pid": [],
+                "stud_client": []
+
             }
         },
         "sis": {

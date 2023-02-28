@@ -122,8 +122,3 @@ if [[ "$devel_mode" -eq 0 ]]; then
   cp $tmpdir/ticketweb-apps-ithelp/shared-data/* "$shared_data_target_dir"
 
 fi
-
-if [[ "$devel_mode" -eq 1 ]]; then
-    pip install --force-reinstall "git+https://github.com/danvk/RangeHTTPServer"
-    #not installing from pip because the pip version is not up do date and only runs on port 8000
-fi

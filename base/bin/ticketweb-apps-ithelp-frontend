@@ -29,6 +29,7 @@ cat $ticketweb_venv_root/etc/ticketweb/applications/ithelp/frontend-config.json
 VUE_APP_CONFIG_DATA=$(cat $ticketweb_venv_root/etc/ticketweb/applications/ithelp/frontend-config.json) 
 export VUE_APP_CONFIG_DATA
 
+echo $VUE_APP_CONFIG_DATA
 
 
 cd "$ticketweb_venv_root"/var/lib/ticketweb/applications/ithelp/frontend

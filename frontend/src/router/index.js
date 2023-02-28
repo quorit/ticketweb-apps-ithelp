@@ -8,7 +8,10 @@ const authsystem_network = require ("authsystem_network");
 import {get_error_params} from '../js_extra/web_project_error.js'
 import store from '../store'
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
+
+
+
 
 
 
@@ -51,23 +54,27 @@ const router = new VueRouter({
 });
 
 
+
+
+
+
 const config_data = JSON.parse(process.env.VUE_APP_CONFIG_DATA);
 
 const authsystem_path = config_data.vue_app_path_roots.authsystem;
+const login_portal_info = config_data.login_portal_info;
 
 
 router.beforeEach(async (to,from,next) => {
     function next_login(){
+        console.log(config_data)
         //here 'to' is assumed to be either reporting_support_form or
         //reporting_request forms
         const type = to.params.type
+        const server_root = login_portal_info.server_root;
+        const page_map = login_portal_info.page_maps[type];
+        const login_url=server_root+page_map
+        location.replace(login_url)
 
-        next({
-            name: "login",
-            params: {
-                type: type
-            }
-        });
     }
 
     
@@ -75,8 +82,19 @@ router.beforeEach(async (to,from,next) => {
     if((to.name == 'onboarding_form')){
 
 
-        try{
-            await authsystem_network.get_app_token(authsystem_path,"ithelp").then(app_token => store.dispatch('set_user_data',app_token));
+        try{       
+            const access_token=(to.query)["access-token"];
+            console.log(access_token);
+            console.log("Did you even get here?")
+            var json_data;
+            if(access_token){
+                json_data = await authsystem_network.get_app_token(authsystem_path,"ithelp",access_token)
+            }else{
+                json_data = await authsystem_network.get_app_token(authsystem_path,"ithelp");
+            }
+            const user_data=json_data.user_data;
+            store.commit('set_user_data',user_data);
+
             //Note that I am re-fetching the user data every time we go to a new page (other than login or error).
             //This is because in another window the user could log out and log in as someone else.
             //and if this app were any more involved, there would be links going from one route to another
