@@ -72,7 +72,8 @@ router.beforeEach(async (to,from,next) => {
         const type = to.params.type
         const server_root = login_portal_info.server_root;
         const page_map = login_portal_info.page_maps[type];
-        const login_url=server_root+page_map
+        const login_url=server_root+ "frontend/" + page_map
+
         location.replace(login_url)
 
     }
