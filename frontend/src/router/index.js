@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import OnboardingForm from '../views/Onboarding.vue'
 import ErrorPage from '../views/ErrorPage.vue'
-import LoginForm from '../views/Login.vue'
 
 const authsystem_network = require ("authsystem_network");
 import {get_error_params} from '../js_extra/web_project_error.js'
@@ -20,11 +19,6 @@ const routes = [
         path: '/forms/:type(onboarding)',
         component: OnboardingForm,
         name: "onboarding_form"
-    },
-    {
-        path: '/login/:type(onboarding)',
-        component: LoginForm,
-        name: "login"
     },
     {
         path: '/error/:error_type/:status_code?',

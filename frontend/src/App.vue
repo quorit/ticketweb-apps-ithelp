@@ -97,7 +97,7 @@ export default {
   //        await authsystem_network.get_app_token(authsystem_path,"ithelp").then(app_token => this.$store.dispatch('set_user_data',app_token));
   //  }
   //},
-  mounted: async function(){
+  beforeCreate: async function(){
     try { 
       await this.$store.dispatch('set_init_data');
     } catch(e) {

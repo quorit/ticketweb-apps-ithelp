@@ -761,7 +761,7 @@
   
 import FormShell from '../components/FormShell'
 import StepShell from '../components/StepShell.vue'
-
+import {get_error_params} from '../js_extra/web_project_error.js'
 
 
 export default {
@@ -1092,7 +1092,7 @@ export default {
          }
       },
    },
-   mounted(){
+   async mounted(){
       this.reset_funcs=[
          this.$refs.step1.reset_step,
          this.$refs.step2.reset_step,
@@ -1103,7 +1103,18 @@ export default {
          this.$refs.step7.reset_step,
          this.$refs.step8.reset_step,
          this.$refs.step9.reset_step
-   ]
+      ];
+                
+   },
+   async beforeCreate(){
+      try { 
+         await this.$store.dispatch('set_init_data');
+      } catch(e) {
+         this.$router.push({
+            name: "error_page",
+            params: get_error_params(e)
+         });      
+      }  
    }
 }
 </script>
