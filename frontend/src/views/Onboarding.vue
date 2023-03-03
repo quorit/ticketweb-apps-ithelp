@@ -1,8 +1,7 @@
 <template>
-    <FormShell
+    <FormShell v-if="$store.state.init_data"
     :clear-func="clear_func"
     :heading="$route.params.type.charAt(0).toUpperCase() + $route.params.type.slice(1) + ' data request'"
-    :init-data="init_data"
     :form-type="route_type"
     :ticket_id="ticket_id"
 
@@ -139,7 +138,7 @@
             <v-treeview
                    
              ref="job_tree"
-             :items="tree_data"
+             :items="org_tree.org_tree"
              activatable
              open-on-click
              :active.sync="job_title_ids"
@@ -761,7 +760,6 @@
   
 import FormShell from '../components/FormShell'
 import StepShell from '../components/StepShell.vue'
-import {get_error_params} from '../js_extra/web_project_error.js'
 
 
 export default {
@@ -774,61 +772,18 @@ export default {
    data: function() {
       const route_type=this.$route.params.type;
 
-      console.log(this.$store.state.init_data);
-      const xlat=this.$store.state.init_data.xlat;
-      const org_tree=this.$store.state.init_data.org_tree;
+      // console.log(this.$store.state.init_data);
 
-      var job_title_id_map = [];
-
-      function build_tree_data (parent_path,org_tree){
-         var result_list=[];
-         var live_id_count=job_title_id_map.length;
-         for (const key of Object.keys(org_tree)){
-            var new_path = [...parent_path]
-            new_path.push(key);
-            job_title_id_map.push(new_path);
-            const label=xlat[key]
-            const child=org_tree[key];
-            var children;
-            if (child.constructor!=Array){
-               children = build_tree_data(new_path,child);
-            }else{
-               children=[];
-            }
-            const result_obj = {
-               id: live_id_count,
-               name: label,
-               children: children
-            }
-            result_list.push(result_obj);
-            live_id_count=job_title_id_map.length;
-         }
-         return result_list
-      }
-
-
-      var org_tree_data = build_tree_data([],org_tree);
-
-
-
-      org_tree_data.push({
-         id: job_title_id_map.length,
-         name: "Other...",
-         children: []
-      });
-
+      
       const total_steps=8;
 
       return {
-         org_tree: org_tree,
          job_title_ids: [],
-         tree_data: org_tree_data,
-         job_title_id_map: job_title_id_map,
+
 
          replacement_pos: 0,
          former_employee: "",
          start_date: '',
-         xlat: xlat,
          netID_Rules: [
             v => /^([a-z0-9])*$/.test(v) || "Must be lower-case alphanumeric"
          ],
@@ -848,21 +803,14 @@ export default {
          date_menu: false,
          position_descr: "",
          selected_roles: [],
-         work_models: this.$store.state.init_data.work_models,
-
          work_model_selection: "hybrid",
-         rooms: this.$store.state.init_data.rooms,
          room_selection: "gor110",
          room_sublocation: "",
-         phone_ext_options: this.$store.state.init_data.phone_extensions,
          phone_ext_choice: "has_phone_not_required",
-         hw_choices: this.$store.state.init_data.hw_choices,
          hw_choice: "hw_choice1",
          hw_choice_selection: "hybrid",
          laptop_explanation: "",
-         supp_prints: this.$store.state.init_data.supp_prnts,
          supp_print_choice: [],
-         supp_mls: this.$store.state.init_data.supp_mls,
          supp_ml_choice: [],
          selected_file_shares: [],
          reset_funcs: [],
@@ -946,13 +894,19 @@ export default {
 
          }else{
             const job_title_id = this.job_title_ids[0];
-            const path=this.job_title_id_map[job_title_id];
-            var child=this.org_tree;
+            const path=this.org_tree.job_title_id_map[job_title_id];
+            console.log(path);
+            var child=this.org_tree.org_tree_init;
+            console.log(child)
             var new_child;
             var element;
             for (element of path){
                new_child=child[element];
+               console.log("ELEMENT IS");
+               console.log(element);
                child = new_child;
+               console.log("CHILD IS");
+               console.log(child);
             }
             //return child;
             return child.map(x=>this.xlat[x]);
@@ -963,7 +917,7 @@ export default {
       other_job_title_selected: function(){
          if (this.job_title_ids.length>0){
             const job_title_id = this.job_title_ids[0];
-            return job_title_id == this.job_title_id_map.length;
+            return job_title_id == this.org_tree.job_title_id_map.length;
          }else{
             return false;
          }
@@ -980,7 +934,7 @@ export default {
                const job_title_id = this.job_title_ids[0];
                return{
                   job_title_type: "standard",
-                  job_title_path: this.job_title_id_map[job_title_id]
+                  job_title_path: this.org_tree.job_title_id_map[job_title_id]
                }
             }
          }else{
@@ -992,12 +946,87 @@ export default {
          return this.submission_data();
       },
 
-      init_data: function(){
-         console.log("WHERE ARE WE?");
-         return this.$store.state.init_data;
+   
+
+      xlat: function(){
+         return this.$store.state.init_data.xlat;
       },
-     
+      org_tree: function(){
+         var job_title_id_map = [];
+         const org_tree_init = this.$store.state.init_data.org_tree;
+
+      
+         function build_tree_data (parent_path,org_tree,xlat){
+            var result_list=[];
+            var live_id_count=job_title_id_map.length;
+            for (const key of Object.keys(org_tree)){
+               var new_path = [...parent_path]
+               new_path.push(key);
+               job_title_id_map.push(new_path);
+               const label=xlat[key]
+               const child=org_tree[key];
+               var children;
+               if (child.constructor!=Array){
+                  children = build_tree_data(new_path,child,xlat);
+               }else{
+                  children=[];
+               }
+               const result_obj = {
+                  id: live_id_count,
+                  name: label,
+                  children: children
+               }
+               result_list.push(result_obj);
+               live_id_count=job_title_id_map.length;
+            }
+            return result_list
+         }
+
+
+         var org_tree_data = build_tree_data([],org_tree_init,this.xlat);
+
+
+
+         org_tree_data.push({
+            id: job_title_id_map.length,
+            name: "Other...",
+            children: []
+         });
+         return {
+            org_tree_init: org_tree_init, 
+            org_tree: org_tree_data,
+            job_title_id_map: job_title_id_map
+         }
+
+      },
+      work_models: function(){
+         return this.$store.state.init_data.work_models;
+      },
+      rooms: function(){
+         return this.$store.state.init_data.rooms;
+      },
+      phone_ext_options: function (){
+         return this.$store.state.init_data.phone_extensions;
+      },
+
+      hw_choices: function (){
+         return this.$store.state.init_data.hw_choices;
+      },
+
+      supp_prints: function (){
+         return this.$store.state.init_data.supp_prnts;
+      },
+
+      supp_mls: function(){
+         return this.$store.state.init_data.supp_mls;
+      },
       field_dict: function(){
+         // var field_listX;
+         // if ("standard_fields" in this.$store.state.init_data){
+         //   field_listX = this.$store.state.init_data.standard_fields[this.$route.params.type];
+         // }else{
+         //   field_listX = [];
+         //}
          const field_list = this.$store.state.init_data.standard_fields[this.$route.params.type];
          var field_dict = {};
          var i;
@@ -1106,16 +1135,6 @@ export default {
       ];
                 
    },
-   async beforeCreate(){
-      try { 
-         await this.$store.dispatch('set_init_data');
-      } catch(e) {
-         this.$router.push({
-            name: "error_page",
-            params: get_error_params(e)
-         });      
-      }  
-   }
 }
 </script>
 

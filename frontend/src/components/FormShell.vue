@@ -103,7 +103,6 @@ export default {
         validateFunc: Function,
         submissionData: Object,
         heading: String,
-        initData: Object,
         submit_button_label: String,
         formType: String,
         step_num: Number,

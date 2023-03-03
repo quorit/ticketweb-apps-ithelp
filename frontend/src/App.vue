@@ -92,21 +92,16 @@ export default {
       this.$router.go() //reloads page which should cause cause a re-route to the login page because the session cookie go mauled
     }
   },
-  //beforeMount: async function(){
-  //  if (this.$route.name != 'login' && this.$route.name != 'error_page'){
-  //        await authsystem_network.get_app_token(authsystem_path,"ithelp").then(app_token => this.$store.dispatch('set_user_data',app_token));
-  //  }
-  //},
+
   beforeCreate: async function(){
-    try { 
-      await this.$store.dispatch('set_init_data');
-    } catch(e) {
-      this.$router.push({
+      try { 
+        await this.$store.dispatch('set_init_data');
+      } catch(e) {
+        this.$router.push({
           name: "error_page",
           params: get_error_params(e)
-      });            
+        });            
+      }
     }
-   
-  }
 };
 </script>
