@@ -10,6 +10,9 @@ const config_data = j5.parse(process.env.VUE_APP_CONFIG_DATA);
 
 
 module.exports = {
+
+   parallel: false,
+
   transpileDependencies: [
     'vuetify'
   ],
